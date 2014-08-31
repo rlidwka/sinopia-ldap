@@ -1,7 +1,7 @@
 var assert = require('assert')
-  , parse_htpasswd = require('../../lib/htpasswd')._parse_htpasswd
-  , verify_password = require('../../lib/htpasswd')._verify_password
-  , add_user_to_htpasswd = require('../../lib/htpasswd')._add_user_to_htpasswd
+  , parse_htpasswd = require('../utils').parse_htpasswd
+  , verify_password = require('../utils').verify_password
+  , add_user_to_htpasswd = require('../utils').add_user_to_htpasswd
 
 describe('parse_htpasswd', function() {
 	// TODO

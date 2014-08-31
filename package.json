@@ -21,6 +21,6 @@
 
   "publishConfig"       : { "registry": "https://registry.npmjs.org/" },
 
-  "license"             : { "type": "WTFPL",
+  "license"             : { "type": "WTFPL"
                           , "url": "http://www.wtfpl.net/txt/copying/" }
 }
