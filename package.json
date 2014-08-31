@@ -1,0 +1,22 @@
+{
+  "name"               : "sinopia-htpasswd",
+  "version"            : "0.1.0",
+  "description"        : "auth plugin for sinopia supporting htpasswd format",
+
+  "author"             : { "name": "Alex Kocharin"
+                         , "email": "alex@kocharin.ru" },
+
+  "repository"         : { "type": "git"
+                         , "url": "git://github.com/rlidwka/sinopia-htpasswd" },
+
+  "dependencies"       : { "crypt3": ">=0.1.5 <1.0.0-0" },
+
+  "bundledDependencies": [ "crypt3" ],
+
+  "keywords"           : [ "sinopia", "auth", "plugin", "htpasswd" ],
+
+  "publishConfig"      : { "registry": "https://registry.npmjs.org/" },
+
+  "license"            : { "type": "WTFPL",
+                         , "url": "http://www.wtfpl.net/txt/copying/" }
+}
