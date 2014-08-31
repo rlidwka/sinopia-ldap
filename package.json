@@ -9,7 +9,8 @@
   "repository"          : { "type": "git"
                           , "url": "git://github.com/rlidwka/sinopia-htpasswd" },
 
-  "optionalDependencies": { "crypt3": ">=0.1.5 <1.0.0-0" },
+  "optionalDependencies": { "crypt3": ">=0.1.5 <1.0.0-0"
+                          , "fs-ext": "*" },
 
   "bundledDependencies" : [ "crypt3" ],
 

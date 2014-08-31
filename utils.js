@@ -9,6 +9,36 @@ try {
   }
 }
 
+try {
+	var fsExt = require('fs-ext')
+} catch(e) {
+	fsExt = {
+		flock: function() {
+			arguments[arguments.length-1]()
+		}
+	}
+}
+
+// this function neither unlocks file nor closes it
+// it'll have to be done manually later
+function lock_and_read(name, callback) {
+	open_flock(name, 'r', 'exnb', 4, 10, function(err, fd) {
+		if (err) return callback(err, fd)
+
+		fs.fstat(fd, function(err, st) {
+			if (err) return callback(err, fd)
+
+			var buffer = new Buffer(st.size)
+			fs.read(fd, buffer, 0, st.size, null, function(err, bytesRead, buffer) {
+				if (err) return callback(err)
+				if (bytesRead != st.size) return callback(new Error('st.size != bytesRead'), fd)
+
+				callback(null, fd, buffer)
+			})
+		})
+	})
+}
+
 function parse_htpasswd(input) {
   var result = {}
   input.split('\n').forEach(function(line) {
@@ -49,4 +79,4 @@ function add_user_to_htpasswd(body, user, passwd) {
 module.exports.parse_htpasswd = parse_htpasswd
 module.exports.verify_password = verify_password
 module.exports.add_user_to_htpasswd = add_user_to_htpasswd
-
+module.exports.lock_and_read = lock_and_read
