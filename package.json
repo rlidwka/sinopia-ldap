@@ -13,6 +13,10 @@
 
   "bundledDependencies" : [ "crypt3" ],
 
+  "devDependencies"     : { "mocha": ">=1.17.0 <2.0.0-0" },
+
+  "scripts"             : { "test": "mocha ./tests" },
+
   "keywords"            : [ "sinopia", "auth", "plugin", "htpasswd" ],
 
   "publishConfig"       : { "registry": "https://registry.npmjs.org/" },
