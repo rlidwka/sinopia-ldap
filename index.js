@@ -48,7 +48,7 @@ HTPasswd.prototype.authenticate = function(user, password, cb) {
 // 4. move .htpasswd.tmp to .htpasswd
 // 5. reload .htpasswd
 // 6. unlock file
-HTPasswd.prototype.add_user = function(user, password, callback) {
+HTPasswd.prototype.adduser = function(user, password, callback) {
   var self = this
 
   function sanity_check() {

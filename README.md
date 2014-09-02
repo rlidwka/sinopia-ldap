@@ -41,7 +41,7 @@ Where:
 
 This should export two functions:
 
- - `add_user(user, password, cb)`
+ - `adduser(user, password, cb)`
    
    It should respond with:
     - `cb(err)` in case of an error (error will be returned to user)
