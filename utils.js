@@ -1,4 +1,5 @@
 var crypto = require('crypto')
+var fs = require('fs')
 
 try {
   // optional, won't be available on windows

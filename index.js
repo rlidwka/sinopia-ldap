@@ -48,7 +48,7 @@ HTPasswd.prototype.authenticate = function(user, password, cb) {
 // 4. move .htpasswd.tmp to .htpasswd
 // 5. reload .htpasswd
 // 6. unlock file
-HTPasswd.prototype.adduser = function(user, password, callback) {
+HTPasswd.prototype.adduser = function(user, password, real_cb) {
   var self = this
 
   function sanity_check() {
@@ -86,11 +86,11 @@ HTPasswd.prototype.adduser = function(user, password, callback) {
     if (s_err) return cb(s_err)
 
     try {
-      body = utils.add_user_to_htpasswd(body, user, passwd)
+      body = utils.add_user_to_htpasswd(body, user, password)
     } catch(err) {
       return cb(err)
     }
-    fs.writeFile(path, body, function(err) {
+    fs.writeFile(self._path, body, function(err) {
       if (err) return cb(err)
       self._reload(function() {
         cb(null, true)
@@ -107,7 +107,8 @@ HTPasswd.prototype._reload = function(callback) {
 
     fs.fstat(fd, function(err, st) {
       if (err) return callback(err)
-      if (last_time === st.mtime) return callback()
+      if (self._last_time === st.mtime) return callback()
+      self._last_time = st.mtime
 
       var buffer = new Buffer(st.size)
       fs.read(fd, buffer, 0, st.size, null, function(err, bytesRead, buffer) {
