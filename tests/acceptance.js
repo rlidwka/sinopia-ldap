@@ -75,8 +75,8 @@ describe('acc', function() {
     }) 
   })
 
-  describe('maxusers', function() {
-    var p = plugin({file: './test-htpasswd', maxusers: 1}, stuff)
+  describe('max_users', function() {
+    var p = plugin({file: './test-htpasswd', max_users: 1}, stuff)
     before(function(cb) {
       p.adduser('foo', 'bar', function(err, ok) {
         cb()

@@ -18,7 +18,7 @@ function HTPasswd(config, stuff) {
   this._sinopia_config = stuff.config
 
   // all this "sinopia_config" stuff is for b/w compatibility only
-  this._maxusers = this._config.maxusers || this._sinopia_config.maxusers
+  this._maxusers = this._config.max_users || this._sinopia_config.max_users
 
   this._last_time = null
   var file = this._config.file || this._sinopia_config.users_file
