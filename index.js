@@ -21,18 +21,17 @@ function HTPasswd(config, stuff) {
   this._maxusers = this._config.maxusers || this._sinopia_config.maxusers
 
   this._last_time = null
-  this._path = Path.resolve(
-    Path.dirname(this._sinopia_config.self_path),
-    this._config.file || this._sinopia_config.users_file
-  )
+  var file = this._config.file || this._sinopia_config.users_file
+  if (!file) throw new Error('should specify "file" in config')
+  this._path = Path.resolve(Path.dirname(this._sinopia_config.self_path), file)
 }
 
 HTPasswd.prototype.authenticate = function(user, password, cb) {
   var self = this
   self._reload(function(err) {
-    if (err) return cb(err)
+    if (err) return cb(err.code === 'ENOENT' ? null : err)
     if (!self._users[user]) return cb(null, false)
-    if (!utils.verify_password(user, passwd, this._users[user])) return cb(null, false)
+    if (!utils.verify_password(user, password, self._users[user])) return cb(null, false)
 
     // authentication succeeded!
     // return all usergroups this user has access to;
@@ -55,7 +54,7 @@ HTPasswd.prototype.adduser = function(user, password, real_cb) {
     var err = null
     if (self._users[user]) {
       err = Error('this user already exists')
-    } else if (Object.keys(users).length >= self._maxusers) {
+    } else if (Object.keys(self._users).length >= self._maxusers) {
       err = Error('maximum amount of users reached')
     }
     if (err) err.status = 403
@@ -64,14 +63,14 @@ HTPasswd.prototype.adduser = function(user, password, real_cb) {
 
   // preliminary checks, just to ensure that file won't be reloaded if it's not needed
   var s_err = sanity_check()
-  if (s_err) return real_cb(s_err)
+  if (s_err) return real_cb(s_err, false)
 
   utils.lock_and_read(self._path, function(err, fd, res) {
     // callback that cleanups fd first
     function cb(err) {
-      if (!fd) return real_cb(err)
+      if (!fd) return real_cb(err, !err)
       fs.close(fd, function() {
-        real_cb(err)
+        real_cb(err, !err)
       })
     }
 
