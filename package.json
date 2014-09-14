@@ -12,8 +12,6 @@
   "optionalDependencies": { "crypt3": ">=0.1.5 <1.0.0-0"
                           , "fs-ext": "*" },
 
-  "bundledDependencies" : [ "crypt3" ],
-
   "devDependencies"     : { "mocha": ">=1.17.0 <2.0.0-0" },
 
   "scripts"             : { "test": "mocha ./tests" },
