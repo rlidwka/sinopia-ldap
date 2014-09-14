@@ -5,25 +5,26 @@ var utils = require('./utils')
 module.exports = HTPasswd
 
 function HTPasswd(config, stuff) {
-  if (!(this instanceof HTPasswd)) return new HTPasswd(config, stuff)
-  this._users = {}
+  var self = Object.create(HTPasswd.prototype)
+  self._users = {}
 
   // config for this module
-  this._config = config
+  self._config = config
 
   // sinopia logger
-  this._logger = stuff.logger
+  self._logger = stuff.logger
 
   // sinopia main config object
-  this._sinopia_config = stuff.config
+  self._sinopia_config = stuff.config
 
   // all this "sinopia_config" stuff is for b/w compatibility only
-  this._maxusers = this._config.max_users || this._sinopia_config.max_users
+  self._maxusers = self._config.max_users || self._sinopia_config.max_users
 
-  this._last_time = null
-  var file = this._config.file || this._sinopia_config.users_file
+  self._last_time = null
+  var file = self._config.file || self._sinopia_config.users_file
   if (!file) throw new Error('should specify "file" in config')
-  this._path = Path.resolve(Path.dirname(this._sinopia_config.self_path), file)
+  self._path = Path.resolve(Path.dirname(self._sinopia_config.self_path), file)
+  return self
 }
 
 HTPasswd.prototype.authenticate = function(user, password, cb) {
