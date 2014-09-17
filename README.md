@@ -3,10 +3,8 @@
 
 ```sh
 $ npm install sinopia
-$ npm install sinopia-htpasswd
+$ npm install sinopia-ldap
 ```
-
-PS: Actually, this module is bundled with sinopia, so you don't have to install it like this. But with other auth plugins you have to.
 
 ## Config
 
@@ -14,12 +12,21 @@ Add to your `config.yaml`:
 
 ```yaml
 auth:
-  htpasswd:
-    users_file: ./htpasswd
-
-    # Maximum amount of users allowed to register, defaults to "+inf".
-    # You can set this to 0 to disable registration.
-    #max_users: 1000
+  ldap:
+    type: ldap
+    groupNameAttribute: 'cn'
+    client_options:
+      url: "ldaps://ldap.example.com"
+      adminDn: "cn=admin,dc=example,dc=com"
+      adminPassword: "admin"
+      searchBase: "ou=People,dc=example,dc=com"
+      searchFilter: "(uid={{username}})"
+      cache: False
+      searchAttributes:
+        - "*"
+        - memberOf
+      tlsOptions:
+        rejectUnauthorized: False
 ```
 
 ## For plugin writers
@@ -27,7 +34,7 @@ auth:
 It's called as:
 
 ```js
-require('sinopia-htpasswd')(config, stuff)
+require('sinopia-ldap')(config, stuff)
 ```
 
 Where:

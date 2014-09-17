@@ -1,22 +1,22 @@
 {
-  "name"                : "sinopia-htpasswd",
+  "name"                : "sinopia-ldap",
   "version"             : "0.4.1",
-  "description"         : "auth plugin for sinopia supporting htpasswd format",
+  "description"         : "LDAP auth plugin for sinopia",
 
   "author"              : { "name": "Alex Kocharin"
                           , "email": "alex@kocharin.ru" },
 
   "repository"          : { "type": "git"
-                          , "url": "git://github.com/rlidwka/sinopia-htpasswd" },
+                          , "url": "git://github.com/rlidwka/sinopia-ldap" },
 
-  "optionalDependencies": { "crypt3": ">=0.1.5 <1.0.0-0"
-                          , "fs-ext": "*" },
+  "dependencies"        : { "ldapauth-fork": ">= 2.2.12"
+                          , "ldapjs": ">= 0.7.1" },
 
   "devDependencies"     : { "mocha": ">=1.17.0 <2.0.0-0" },
 
   "scripts"             : { "test": "mocha ./tests" },
 
-  "keywords"            : [ "sinopia", "auth", "plugin", "htpasswd" ],
+  "keywords"            : [ "sinopia", "auth", "plugin", "ldap" ],
 
   "publishConfig"       : { "registry": "https://registry.npmjs.org/" },
 
