@@ -41,6 +41,9 @@ Auth.prototype.authenticate = function(user, password, callback) {
     if (ldap_user) {
       var groups = [ user ]
       if ('memberOf' in ldap_user) {
+        if (!Array.isArray(ldap_user.memberOf)) {
+          ldap_user.memberOf = [ ldap_user.memberOf ]
+        }
         for (var i = 0; i < ldap_user.memberOf.length; i++) {
           groups.push("%" + parseDN(ldap_user.memberOf[i]).rdns[0][self._config.groupNameAttribute])
         }
