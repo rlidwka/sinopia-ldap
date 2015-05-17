@@ -17,7 +17,6 @@ function Auth(config, stuff) {
 
   // TODO: Set more defaults
   self._config.groupNameAttribute = self._config.groupNameAttribute || 'cn'
-  self._ldap = new LdapAuth(self._config.client_options)
 
   return self
 }
@@ -27,8 +26,9 @@ function Auth(config, stuff) {
 //
 Auth.prototype.authenticate = function(user, password, callback) {
   var self = this
+  var LdapClient = new LdapAuth(self._config.client_options)
 
-  self._ldap.authenticate(user, password, function(err, ldap_user) {
+  LdapClient.authenticate(user, password, function(err, ldap_user) {
     if (err) {
       // 'No such user' is reported via error
       self._logger.warn({
@@ -51,5 +51,13 @@ Auth.prototype.authenticate = function(user, password, callback) {
     }
 
     callback(null, groups)
+  })
+
+  LdapClient.close(function(err) {
+    if (err) {
+      self._logger.warn({
+         err: err
+        }, 'LDAP error on close @{err}')
+     }
   })
 }
