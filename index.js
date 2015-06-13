@@ -35,6 +35,15 @@ Auth.prototype.authenticate = function(user, password, callback) {
         user: user,
         err: err,
       }, 'LDAP error @{err}')
+
+      LdapClient.close(function(err) {
+        if (err) {
+          self._logger.warn({
+             err: err
+            }, 'LDAP error on close @{err}')
+         }
+      })
+
       return callback(null, false)
     }
 
@@ -51,13 +60,14 @@ Auth.prototype.authenticate = function(user, password, callback) {
     }
 
     callback(null, groups)
-  })
 
-  LdapClient.close(function(err) {
-    if (err) {
-      self._logger.warn({
-         err: err
-        }, 'LDAP error on close @{err}')
-     }
+    LdapClient.close(function(err) {
+      if (err) {
+        self._logger.warn({
+           err: err
+          }, 'LDAP error on close @{err}')
+       }
+    })
+
   })
 }
