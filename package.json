@@ -1,6 +1,6 @@
 {
   "name"                : "sinopia-ldap",
-  "version"             : "0.5.0",
+  "version"             : "0.5.1",
   "description"         : "LDAP auth plugin for sinopia",
 
   "author"              : { "name": "Alex Kocharin"
